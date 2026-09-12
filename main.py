@@ -1,7 +1,6 @@
 from random import randrange
 from typing import Optional
 from fastapi import FastAPI, HTTPException, Response, status
-from fastapi.exception_handlers import http_exception_handler
 from pydantic import BaseModel
 
 
