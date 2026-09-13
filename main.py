@@ -25,12 +25,9 @@ def find_post_index(id):
         if p['id'] == id:
             return i
 
-        
-
 @app.get("/")
 def read_root():
     return {"message": "heyy this is my 1st server"}
-
 
 @app.get("/posts")
 def get_posts():
