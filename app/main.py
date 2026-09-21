@@ -1,12 +1,14 @@
 from random import randrange
 from sys import exception
-from turtle import pos
-from typing import Optional
 from fastapi import FastAPI, HTTPException, Response, status
 from pydantic import BaseModel
 import psycopg2
 import time
 from psycopg2.extras import RealDictCursor
+from dotenv import load_dotenv
+import os
+
+load_dotenv("D:/choding/fastAPI/.env")
 
 app = FastAPI()
 
@@ -17,7 +19,13 @@ class Post(BaseModel):
 
 while True:
     try:
-        conn = psycopg2.connect(host='localhost', database='fastAPI', user='postgres', password='2554650', cursor_factory=RealDictCursor)
+        conn = psycopg2.connect(
+            host=os.getenv("DB_HOST"),
+            database=os.getenv("DB_NAME"),
+            user=os.getenv("DB_USER"),
+            password=os.getenv("DB_PASSWORD"),
+            cursor_factory=RealDictCursor
+        )
         cursor = conn.cursor()
         print("database connection OK")
         break
