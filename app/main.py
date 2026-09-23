@@ -42,19 +42,23 @@ while True:
         print("Error: ", error)
         time.sleep(2)
 
+
 @app.get("/")
 def read_root():
     return {"message": "heyy this is my 1st server"}
+
 
 @app.get("/sqlalchemy")
 def test_posts(db: Session = Depends(get_db)):
     posts = db.query(models.Post).all()
     return {"data": posts}
 
+
 @app.get("/posts")
 def get_posts(db: Session = Depends(get_db)):
     posts = db.query(models.Post).all()
     return{"data": posts}
+
 
 @app.post("/posts", status_code=status.HTTP_201_CREATED)
 def create_posts(post: Post, db: Session = Depends(get_db)):
@@ -70,6 +74,7 @@ def create_posts(post: Post, db: Session = Depends(get_db)):
 
     return{"data": new_post} 
 
+
 @app.get("/posts/{id}")
 def get_post(id : int, db: Session = Depends(get_db)):
     # cursor.execute("""SELECT * FROM posts WHERE id = %s """, (id,))
@@ -79,6 +84,7 @@ def get_post(id : int, db: Session = Depends(get_db)):
         raise HTTPException(status_code = status.HTTP_404_NOT_FOUND, detail= f"post with id {id} is not found")
 
     return{"post_details" : post}
+
 
 @app.delete("/posts/{id}", status_code = status.HTTP_204_NO_CONTENT)
 def delete_post(id : int, db: Session = Depends(get_db)):
@@ -95,6 +101,7 @@ def delete_post(id : int, db: Session = Depends(get_db)):
         raise HTTPException(status_code= status.HTTP_404_NOT_FOUND, detail= f"post with id {id} not found")
     
     return Response(status_code = status.HTTP_204_NO_CONTENT)
+
 
 @app.put("/posts/{id}")
 def update_post(id : int, updated_post : Post, db: Session = Depends(get_db)):
